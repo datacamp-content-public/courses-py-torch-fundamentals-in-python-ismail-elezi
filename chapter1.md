@@ -3,7 +3,7 @@ title: 'Chapter Title Here'
 description: 'Chapter description goes here.'
 ---
 
-## Insert exercise title here
+## Activation Functions
 
 ```yaml
 type: VideoExercise
@@ -24,7 +24,7 @@ key: ba27197060
 xp: 100
 ```
 
-Let's see the differences between neural networks which apply ReLU and those which do not apply ReLU. We have the code given here which randomly initializes the input called input_layer, and three sets of weights, called weight_1, weight_2 and weight_3.
+Let's see the differences between neural networks which apply `ReLU` and those which do not apply `ReLU`. We have given the code here which randomly initializes the input called `input_layer`, and three sets of weights, called `weight_1`, `weight_2` and `weight_3`.
 
 ```
 input_layer = torch.randn(1, 4)
@@ -174,7 +174,7 @@ xp: 100
 
 On the previous exercise, it is possible that you got a vector of zeros in the output. The reason for this is that if a unit is connected with the previous layer only with negative weights, then that unit will become 0 after applying ReLU on it. Then that unit won't have any effect on the next layer, and so on. When a unit has value 0, that unit is considered dead. Based on some studies, in modern neural networks circa 30% of units are dead units.
 
-In order to fix this, there is a simple trick. You can replace ReLU with leaky ReLU which implements the function `leaky_ReLU(x) = (a*x, x)` where a is a small positive number, meaning that negative values instead of being set to 0 are set to a small number instead (the number being a times original value).
+In order to fix this, there is a simple trick. You can replace `ReLU` with `leaky ReLU` which implements the function `leaky_ReLU(x) = (a*x, x)` where `a` is a small positive number, meaning that negative values instead of being set to 0 are set to a small number instead (the number being `a` times original value).
 
 `@instructions`
 The code is the same as in the previous exercise, but now we are going to replace `ReLU` with `leaky_ReLU`, and for parameter `a`, we are going to choose `0.1`.
@@ -239,7 +239,7 @@ key: 6e5a125d55
 xp: 100
 ```
 
-On the previous exercises, we didn't insert non-linearity on the final layer. On neural networks, the final layer typically has a different version of non-linearity, whose purpose (in addition to adding non-linearity) is to transform the output values into a probability distribution. This allows the network to also point out the confidence of its prediction.
+On the previous exercises, we did not insert non-linearity on the final layer. On neural networks, the final layer typically has a different version of non-linearity, whose purpose (in addition to adding non-linearity) is to transform the output values into a probability distribution. This allows the network to also point out the confidence of its prediction.
 
 This type of function is called `softmax` function (`logistic` or `sigmoid` function on binary case) and is implemented on `torch.nn` module. Let us see how it works.
 
