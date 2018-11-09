@@ -1,5 +1,5 @@
 ---
-title: 'Chapter Title Here'
+title: 'Artificial Neural Networks'
 description: 'Chapter description goes here.'
 ---
 
@@ -266,15 +266,15 @@ s = nn.Softmax()
 
 input_1 = torch.randn(4,4)
 output_1 = ___(input_1)
-print(output_1, "\n")
+print(___, "\n")
 
 input_2 = ___
 output_2 = ___
-print(output_2, "\n")
+print(___, "\n")
 
 input_3 = ___
 output_3 = ___
-print(output_3)
+print(___)
 ```
 
 `@solution`
