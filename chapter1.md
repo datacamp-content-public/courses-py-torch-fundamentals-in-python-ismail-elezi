@@ -33,7 +33,7 @@ weight_2 = torch.randn(4, 4)
 weight_3 = torch.randn(4, 4)
 ```
 
-We are going to convince ourselves that networks with multiple layers which do not contain non-linearity can be expressed as neural networks with one layer. 
+We are going to convince ourselves that networks with multiple layers which do not contain non-linearity can be expressed as neural networks with one layer.
 
 `@instructions`
 1) Multiply the `input_layer` with `weight_1` and store the result in `hidden_1`, then multiply `hidden_1` with `weight_2` and store the result in `hidden_2`.
@@ -102,7 +102,7 @@ key: 2ce188a22b
 xp: 100
 ```
 
-We have the same input and same weights as before. Now we are going to build a neural network which has non-linearity and by doing so, we are going to convince ourselves that networks with multiple layers and non-linearity functions cannot be expressed as neural networks with one layer. 
+We have the same input and same weights as before. Now we are going to build a neural network which has non-linearity and by doing so, we are going to convince ourselves that networks with multiple layers and non-linearity functions cannot be expressed as neural networks with one layer.
 
 `@instructions`
 1) We have here the code from the previous exercise. Apply non-linearity on `hidden_1` and `hidden_2` calling those variables `hidden_1_activated` and `hidden_2_activated`.
