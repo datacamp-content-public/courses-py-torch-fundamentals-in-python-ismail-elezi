@@ -172,7 +172,7 @@ key: b0fd004979
 xp: 100
 ```
 
-On the previous exercise, it is possible that you got a vector of zeros in the output. The reason for this is that if a unit is connected with the previous layer only with negative weights, then that unit will become 0 after applying ReLU on it. Then that unit won't have any effect on the next layer, and so on. When a unit has value 0, that unit is considered to be dead. Based on some studies, in modern neural networks circa 30% of units are dead units.
+On the previous exercise, it is possible that you got a vector of zeros in the output. The reason for this is that if a unit is connected with the previous layer only with negative weights, then that unit will become 0 after applying `ReLU` on it. Then that unit won't have any effect on the next layer, and so on. When a unit has value 0, that unit is considered to be dead. Based on some studies, in modern neural networks circa 30% of units are dead units.
 
 In order to fix this, there is a simple trick. You can replace `ReLU` with `leaky ReLU` which implements the function `leaky_ReLU(x) = max(a*x, x)` where `a` is a small positive number, meaning that negative values instead of being set to 0 are set to a small number instead (the number being `a` times original value).
 
