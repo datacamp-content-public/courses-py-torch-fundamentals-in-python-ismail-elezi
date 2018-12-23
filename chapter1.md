@@ -300,3 +300,145 @@ print(output_3)
 ```{python}
 
 ```
+
+---
+
+## Finetuning a CNN
+
+```yaml
+type: NormalExercise
+key: a005898fa6
+xp: 100
+```
+
+In the last lecture we built a function takes in:
+- A neural network
+- An optimizer, called optimizer
+- A loss function, called criterion
+and trains the net on a given dataset.
+
+Now, we are going to use that net to train a letter classifier. However, there might be a problem: our new training dataset is small, in addition to data being images of characters instead of letters.
+
+Using the fine-tuning technique, we are going to show that training neural nets is possible even where we have a small dataset.
+
+`@instructions`
+- Instantiate and load the net from the serialized file `my_net.pth`.
+- Replace the last layer with a randomly initialized linear layer which connects 7 * 7 * 512 features with 27 output classes.
+- Put the net on train mode and then train it using `train_net()` function you built in the penultimate exercise.
+- Put the net on eval mode and then test it using `test_net()` function you built in the last exercise.
+
+`@hint`
+- Net can be put on train mode using `.train()` function, and on eval mode using `.eval`.
+- A linear layer can be instantiated using `nn.Linear(in_features, out_features)`.
+- `load_state_dict` needs as argument a torch data-structure.
+- Optimizer is called `optimizer`, while loss function is called `criterion`.
+
+`@pre_exercise_code`
+```{python}
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import datasets
+import torchvision.transforms as transforms
+import torch.nn.functional as F
+import numpy as np
+
+np.random.seed(314)
+indices = np.arange(10000)
+np.random.shuffle(indices)
+indices_train = indices[:50]
+indices_test = indices[:20]
+
+test_loader_emnist = torch.utils.data.DataLoader(
+    datasets.MNIST('mnist', train=False, download=True,
+                   transform=transforms.Compose([
+                       transforms.ToTensor(),
+                       transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+                   ])),
+    batch_size=1, shuffle=False, sampler=torch.utils.data.SubsetRandomSampler(indices_train), num_workers=0)
+
+
+test_loader = torch.utils.data.DataLoader(
+    datasets.MNIST('mnist', train=False, download=True,
+                   transform=transforms.Compose([
+                       transforms.ToTensor(),
+                       transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+                   ])),
+    batch_size=1, shuffle=False, sampler=torch.utils.data.SubsetRandomSampler(indices_test), num_workers=0)
+
+
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+
+        # instantiate all 3 linear layers
+        self.conv1 = nn.Conv2d(1, 128, 3, padding=1)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.conv2 = nn.Conv2d(128, 256, 3, padding=1)
+        self.conv3 = nn.Conv2d(256, 512, 3, padding=1)
+        self.fc = nn.Linear(7 * 7 * 512, 10)
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = F.relu(self.conv3(x))
+        x = x.view(-1, 7 * 7 * 512)
+        return self.fc(x)
+
+model = Net()
+
+# instantiate the Adam optimizer and Cross-Entropy loss function
+optimizer = optim.Adam(model.parameters(), lr=3e-4)
+` = nn.CrossEntropyLoss()
+
+def train_net(model, optimizer, criterion):
+    # mocked, it takes too long to train the net without a GPU
+    if type(model) != type(Net()):
+        raise TypeError('The first argument should be the model.')  
+        
+
+def test_net(model):
+    # mocked, it takes too long to test the net
+    return 0.57
+```
+
+`@sample_code`
+```{python}
+# Instantiate and load the net fom "my_net.pth"
+model = ____
+model.load_state_dict(____)
+
+# Replace the last layer with a linear layer of size (7 * 7 * 512, 27)
+model.fc = ____
+
+# Put the net on train mode and train it using train_net()
+model.____
+train_net(____, ____, ____)
+
+# Put the net on eval mode, test it and print the results
+model.____
+print("Accuracy of the net is: " + str(test_net(____)))
+```
+
+`@solution`
+```{python}
+# Instantiate and load the net fom "my_net_big.pth"
+model = Net()
+# model.load_state_dict(torch.load('my_net.pth'))
+
+# Replace the last layer with a linear layer of size (7 * 7 * 512, 27)
+model.fc = nn.Linear(7 * 7 * 512, 27)
+
+# Put the net on train mode and train it using train_net()
+model.train()
+train_net(model, optimizer, criterion)
+
+# Put the net on eval mode, test it and print the results
+model.eval()
+print("Accuracy of the net is: " + str(test_net(model)))
+```
+
+`@sct`
+```{python}
+success_msg("Well done! You just finished this PyTorch course.")
+```
