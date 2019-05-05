@@ -1,6 +1,7 @@
 ---
 title: 'Artificial Neural Networks'
 description: 'Chapter description goes here.'
+free_preview: true
 ---
 
 ## Activation Functions
